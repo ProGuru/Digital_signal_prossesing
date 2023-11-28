@@ -1,0 +1,46 @@
+clc;
+clear; 
+b=1.5;
+a=-0.8;
+a1=-1.1;
+a2=0.6;
+B1=[b 0]; A1=[1 a];
+B2=[b 0 0];  A2=[1 a1 a2];
+T=0.25;
+dt=0.001;
+fs=1/dt;
+N=fix(T/dt);
+
+t=0:dt:(N-1)*dt;
+k=0:1:(N-1);
+df=1/T;
+f=0:df:fs;
+f1=20;
+
+x=sin((2*pi*f1*k)/fs);
+y1=filter(B1,A1,x);
+h1=filter(B1,A1,[1 zeros(1,fs-1)]);
+y2=filter(B2,A2,x);
+h2=filter(B2,A2,[1 zeros(1,fs-1)]);
+X=fft(x); 
+H1=fft(h1); 
+Y1=fft(y1);
+H2=fft(h2); 
+Y2=fft(y2); 
+
+figure(1);
+subplot(221), plot(x,'k'), title('входной сигнал '),xlabel('t, c');
+subplot(222), plot(h1,'k'), title('импульсная характеристика');
+subplot(223), plot(y1,'k'), title('выходной сигнал'),xlabel('t, c');
+figure(2);
+subplot(221), plot(x,'k'), title('входной сигнал'),xlabel('t, c');
+subplot(222), plot(h2,'k'), title('импульсная характеристика');
+subplot(223), plot(y2,'k'), title('выходной сигнал'),xlabel('t, c');
+figure(3);
+subplot(221), plot(abs(X),'k'), title('спектр входного сигнала');
+subplot(222), plot(abs(H1),'k'), title('частотная характеристика');
+subplot(223), plot(abs(Y1),'k'), title('спектр  выходного сигнала');
+figure(4);
+subplot(221), plot(abs(X),'k'), title('спектр входного сигнала');
+subplot(222), plot(abs(H2),'k'), title('частотная характеристика');
+subplot(223), plot(abs(Y2),'k'), title('спектр  выходного сигнала');

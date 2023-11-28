@@ -1,0 +1,17 @@
+T=0.25;
+dt=0.001;
+N=fix(T/dt);
+t=0:dt:(N-1)*2*dt;
+B=[1.5 0];
+A=[1 -0.8];
+I=zeros(1,N);
+I(1)=1;
+x=sin(2*pi*50*t);
+y=filter(B,A,x);
+h=filter(B,A,I);
+st=conv(h,x);
+subplot(221), plot(x,'g'), title('x(n)');
+subplot(222), plot(y,'g'), title('y(n)');
+subplot(223), plot(h,'g'), title('h(n)');
+subplot(224), plot(st,'g'), title('st(n)');
+pause;
