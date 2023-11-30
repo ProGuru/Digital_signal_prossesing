@@ -40,7 +40,7 @@ else
   printf("\nРавенство Персиваля для нечётной функции НЕ выполняется, p1 = %d, p2 = %d", p1, p2);
 endif
 
-subplot(411), plot(t,x1,'-k;x1(t);'),  title('Чётный сигнал'), xlabel('с'), grid minor
-subplot(412), plot(t,x2,'-k;x2(t);'), title('Нечётный сигнал'), xlabel('с'), grid minor;
+subplot(411), plot(t,x1,'-g;x1(t);'),  title('Чётный сигнал'), xlabel('с'), grid minor
+subplot(412), plot(t,x2,'-m;x2(t);'), title('Нечётный сигнал'), xlabel('с'), grid minor;
 subplot(413), plot(f,abs(X1),'-g;abs(X1(f);'), title('Спектр чётного сигнала'), xlabel('Гц'), grid minor;
-subplot(414), plot(f,abs(X2),'-g;abs(X2(f);'), title('Спектр нечётного сигнала'), xlabel('Гц'), grid minor;
+subplot(414), plot(f,abs(X2),'-m;abs(X2(f);'), title('Спектр нечётного сигнала'), xlabel('Гц'), grid minor;
