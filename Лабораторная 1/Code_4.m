@@ -10,7 +10,6 @@ fs = 1/dt; % частота дискретизации (s = sample) = 1/0,0.001 
 N = fix(T/dt); % число отсчетов в реализации (перевод в целое число)
 t = 0:dt:(N-1)*dt; % вектор дискретизации по времени
 n = 0:1:(N-1); % array of counts
-df = 1 / T; % интервал дискретизации
 f = n * df; % recovered freq
 
 x1 = sin(2*pi*f1*t); % return a vector x of sinus - non odd

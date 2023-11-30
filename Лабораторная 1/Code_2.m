@@ -10,7 +10,6 @@ fs = 1/dt; % частота дискретизации (s = sample) = 1/0,0.001 
 N = fix(T/dt); % число отсчетов в реализации (перевод в целое число)
 t = 0:dt:(N-1)*dt; % вектор дискретизации по времени
 n = 0:1:(N-1); % array of counts
-df = 1 / T; % интервал дискретизации (= 4 Гц)
 f = n * df; % recovered freq
 
 x1 = sin(2*pi*f1*t); % return a vector x of sinus - non odd
@@ -40,7 +39,9 @@ else
   printf("\nРавенство Персиваля для нечётной функции НЕ выполняется, p1 = %d, p2 = %d", p1, p2);
 endif
 
-subplot(411), plot(t,x1,'-g;x1(t);'),  title('Чётный сигнал'), xlabel('с'), grid minor
-subplot(412), plot(t,x2,'-m;x2(t);'), title('Нечётный сигнал'), xlabel('с'), grid minor;
-subplot(413), plot(f,abs(X1),'-g;abs(X1(f);'), title('Спектр чётного сигнала'), xlabel('Гц'), grid minor;
-subplot(414), plot(f,abs(X2),'-m;abs(X2(f);'), title('Спектр нечётного сигнала'), xlabel('Гц'), grid minor;
+subplot(321), plot(t,x1,'-g;x1(t);'),  title('Чётный сигнал'), xlabel('с'), grid minor
+subplot(322), plot(t,x2,'-m;x2(t);'), title('Нечётный сигнал'), xlabel('с'), grid minor;
+subplot(323), plot(f,real(X1),'-b;abs(X1(f);'), title('Действительная составляющая спектра чётного сигнала'), xlabel('Гц'), grid minor;
+subplot(324), plot(f,real(X2),'-b;abs(X2(f);'), title('Действительная составляющая спектра нечётного сигнала'), xlabel('Гц'), grid minor;
+subplot(325), plot(f,imag(X1),'-r;abs(X1(f);'), title('Мнимая составляющая спектра чётного сигнала'), xlabel('Гц'), grid minor;
+subplot(326), plot(f,imag(X2),'-r;abs(X2(f);'), title('Мнимая составляющая спектра нечётного сигнала'), xlabel('Гц'), grid minor;

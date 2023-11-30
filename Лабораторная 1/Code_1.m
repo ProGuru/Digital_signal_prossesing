@@ -11,7 +11,6 @@ f1 = 1100; %400, 800, 1100
 N = fix(T/dt); % число отсчетов в реализации (перевод в целое число)
 t = 0:dt:(N-1)*dt; % вектор дискретизации по времени
 n = 0:1:(N-1); % array of counts
-df = 1 / T; % интервал дискретизации
 f = n * df; % recovered freq
 
 x = sin(2*pi*f1*t); % return a vector x of sinus - non odd
@@ -38,6 +37,7 @@ subplot(413), plot(t,real(xv),'-m;real(xv);'), title('Восстановленн
 subplot(414), plot(t,real(diff),'-c;real(diff);'), title('Погрешность при восстановлении'), xlabel('с'), grid minor;
 
 figure(2); % -	для системы 1-го порядка:
-subplot(311), plot(f,real(X),'-r;real(X(f));'), title('Действительная составляющая спектра'), xlabel('Гц'), grid minor;
-subplot(312), plot(f,imag(X),'-b;imag(X(f));'), title('Мнимая составляющая спектра'), xlabel('Гц'), grid minor;
-subplot(313), plot(f,abs(X),'-g;abs(X(f);'), title('Составляющая спектра по модулю'), xlabel('Гц'), grid minor;
+subplot(411), plot(f,real(X),'-r;real(X(f));'), title('Действительная составляющая спектра'), xlabel('Гц'), grid minor;
+subplot(412), plot(f,imag(X),'-b;imag(X(f));'), title('Мнимая составляющая спектра'), xlabel('Гц'), grid minor;
+subplot(413), plot(f,abs(X),'-g;abs(X(f);'), title('Составляющая спектра по модулю'), xlabel('Гц'), grid minor;
+
