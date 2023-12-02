@@ -73,7 +73,7 @@ printPlot (B, A, f, x, N, t, filterName); % вывод графиков на э�
   и уровня пульсаций не существует других фильтров с более быстрым переходом от полосы пропускания к полосе запирания.
 %}
 filterName = ' Эллиптического ';
-[B, A] = ellip(3, Rp, Rs, Wn); % Эллиптический фильтр
+[B, A] = ellip(n, Rp, Rs, Wn); % Эллиптический фильтр
 
 printPlot (B, A, f, x, N, t, filterName); % вывод графиков на экран
 
@@ -86,23 +86,11 @@ printPlot (B, A, f, x, N, t, filterName); % вывод графиков на э�
 filterName = ' fir1 ';
 N_fir = 11; % порядок фильтров 11-го порядка для fir1 и fir2
 B = fir1(N_fir, Wn, bartlett(N_fir+1)); % КИХ фильтр-1
+
+clear A; % очистка значений переменной А
 A = 1;
 
-% Дальше функция printPlot не работает
-  filteredSignal = filter(B, A, x); % решение разностного уравнения
-  amplitudeFrequencyResponse = freqz(B, A, length(f)); % вычисление частотной характеристики
-  h_impulseResponse = impz(B, A, N); % вычисление импульсной характеристики
-
-  figure;
-  subplot(421), plot(t, x,'-m;x(t);'),  title('Входной сигнал'), xlabel('с'), grid minor
-  subplot(422), plot(f, abs(fft(x)),'-g;abs(fft(x));'), title('Спектр входного сигнала'), xlabel('Гц'), grid minor;
-
-  subplot(4,2,[3 4]), plot(t, h_impulseResponse,'-k;h_impulseResponse;'), title(strcat('Импульсная характеристика фильтра', filterName)), xlabel('с'), grid minor;
-  subplot(4,2,[5 6]), plot(f, abs(amplitudeFrequencyResponse),'-r;abs(amplitudeFrequencyResponse));'), title(strcat('АЧХ фильтра', filterName)), xlabel('Гц'), grid minor;
-
-  subplot(427), plot(t, filteredSignal,'-;filteredSignal;'),  title(strcat('Отфильтрованный фильтром', filterName, ' сигнал')), xlabel('с'), grid minor
-  subplot(428), plot(f, abs(fft(filteredSignal)),'-g;abs(fft(filteredSignal));'), title(strcat('Спектр отфильтрованного фильтром', filterName, ' сигнал')), xlabel('Гц'), grid minor;
-
+printPlot (B, A, f, x, N, t, filterName); % вывод графиков на экран
 % ✖✖✖✖✖✖✖✖✖✖✖ КИХ-фильтр, использующий окно Хэмминга ✖✖✖✖✖✖✖✖✖✖✖
 %{
   Во втором случае используют метод наименьших квадратов
@@ -110,21 +98,9 @@ A = 1;
 filterName = ' fir2 ';
 F = [0 Wn Wn 1]; % параметры идеальной амплитудно-частотной характеристики НЧ фильтра
 H = [1 1 0 0]; % параметры идеальной амплитудно-частотной характеристики НЧ фильтра Hid(F)
-
 B = fir2(N_fir, F, H); % КИХ фильтр-2
+
+clear A; % очистка значений переменной А
 A = 1;
 
-% Дальше функция printPlot не работает
-  filteredSignal = filter(B, A, x); % решение разностного уравнения
-  amplitudeFrequencyResponse = freqz(B, A, length(f)); % вычисление частотной характеристики
-  h_impulseResponse = impz(B, A, N); % вычисление импульсной характеристики
-
-  figure;
-  subplot(421), plot(t, x,'-m;x(t);'),  title('Входной сигнал'), xlabel('с'), grid minor
-  subplot(422), plot(f, abs(fft(x)),'-g;abs(fft(x));'), title('Спектр входного сигнала'), xlabel('Гц'), grid minor;
-
-  subplot(4,2,[3 4]), plot(t, h_impulseResponse,'-k;h_impulseResponse;'), title(strcat('Импульсная характеристика фильтра', filterName)), xlabel('с'), grid minor;
-  subplot(4,2,[5 6]), plot(f, abs(amplitudeFrequencyResponse),'-r;abs(amplitudeFrequencyResponse));'), title(strcat('АЧХ фильтра', filterName)), xlabel('Гц'), grid minor;
-
-  subplot(427), plot(t, filteredSignal,'-;filteredSignal;'),  title(strcat('Отфильтрованный фильтром', filterName, ' сигнал')), xlabel('с'), grid minor
-  subplot(428), plot(f, abs(fft(filteredSignal)),'-g;abs(fft(filteredSignal));'), title(strcat('Спектр отфильтрованного фильтром', filterName, ' сигнал')), xlabel('Гц'), grid minor;
+printPlot (B, A, f, x, N, t, filterName); % вывод графиков на экран
