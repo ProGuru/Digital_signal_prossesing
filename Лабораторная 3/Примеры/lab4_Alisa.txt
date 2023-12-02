@@ -1,0 +1,112 @@
+clc; clear; 
+% data from lab1
+T = 0.25; dt = 0.001; f1 = 20; f2 = 400;
+% signal vector
+fs = 1/dt; df = 1/T; N = fix(T/dt); 
+t = 0:dt:(N-1)*dt; k = 0:1:(N-1); f = 0:df:fs; 
+
+% отсчеты входного сигнала
+x = sin(2*pi*f1*t) + cos(2*pi*f2*t) - (-1 + 1.*rand(1, N)); % complex
+Wn = 0.707; % частота среза
+
+% ========== рекурсивный фильтр Баттерворта ==================
+[Bb, Ab] = butter(3, Wn); 
+Yb = filter(Bb, Ab, x);
+frqbt = freqz(Bb, Ab, length(f));
+h_butter = impz(Bb, Ab, N);
+imp = [1; zeros(N-1, 1)];
+h = filter(Bb, Ab, imp);
+
+figure;
+subplot(411), plot(t, x), title('Original');
+xlabel('Time (s)');
+subplot(412), plot(t, h_butter), title('Butterworth Impulse response');
+xlabel('Time (s)');
+subplot(413), plot(f, abs(frqbt)), title('Butterworth Frequency response');
+xlabel('Frequency (Hz)');
+subplot(414), plot(t, Yb), title('Butterworth Filtered');
+xlabel('Time (s)');
+
+% ========== рекурсивный фильтр Чебышева 1 ==================
+[Bc1, Ac1] = cheby1(3, 0.5, Wn); 
+Yc1 = filter(Bc1, Ac1, x);
+frqc1 = freqz(Bc1, Ac1, length(f)); 
+h_cheby1 = impz(Bc1, Ac1, N);
+
+figure;
+subplot(411), plot(t, x), title('Original');
+xlabel('Time (s)');
+subplot(412), plot(t, h_cheby1), 
+title('Chebyshev Type 1 Impulse response');
+xlabel('Time (s)');
+subplot(413), plot(f, abs(frqc1)), 
+title('Chebyshev Type 1 Frequency response');
+xlabel('Frequency (Hz)');
+subplot(414), plot(t, Yc1), title('Chebyshev Type 1 Filtered');
+xlabel('Time (s)');
+
+% ========== рекурсивный фильтр Чебышева 2 ==================
+[Bc2, Ac2] = cheby2(3, 40, Wn); 
+Yc2 = filter(Bc2, Ac2, x);
+frqc2 = freqz(Bc2, Ac2, length(f)); 
+h_cheby2 = impz(Bc2, Ac2, N);
+
+figure;
+subplot(411), plot(t, x), title('Original');
+xlabel('Time (s)');
+subplot(412), plot(t, h_cheby2), 
+title('Chebyshev Type 2 Impulse response');
+xlabel('Time (s)');
+subplot(413), plot(f, abs(frqc2)),
+title('Chebyshev Type 2 Frequency response');
+xlabel('Frequency (Hz)');
+subplot(414), plot(t, Yc2), title('Chebyshev Type 2 Filtered');
+xlabel('Time (s)');
+
+% ========== Эллиптический фильтр ==================
+[Be, Ae] = ellip(3, 1, 40, Wn); 
+Ye = filter(Be, Ae, x);
+frqe = freqz(Be, Ae, length(f)); 
+h_ellip = impz(Be, Ae, N);
+
+figure;
+subplot(411), plot(t, x), title('Original');
+xlabel('Time (s)');
+subplot(412), plot(t, h_ellip), title('Elliptic Impulse response');
+xlabel('Time (s)');
+subplot(413), plot(f, abs(frqe)), title('Elliptic Frequency response');
+xlabel('Frequency (Hz)');
+subplot(414), plot(t, Ye), title('Elliptic Filtered');
+xlabel('Time (s)');
+
+% ========== FIR1 ==================
+BF1 = fir1(11, Wn, bartlett(12));
+Yf1 = filter(BF1, 1, x);
+hf1 = impz(BF1, 1, N);
+Hf1 = freqz(BF1, 1, length(f));
+figure;
+subplot(411), plot(t, x), title('Original');
+xlabel('Time (s)');
+subplot(412), plot(t, hf1), title('FIR1 Impulse response');
+xlabel('Time (s)');
+subplot(413), plot(f, abs(Hf1)), title('FIR1 Frequency response');
+xlabel('Frequency (Hz)');
+subplot(414), plot(t, Yf1), title('FIR1 Filtered');
+xlabel('Time (s)');
+
+% ========== FIR2 ==================
+F = [0 Wn Wn 1]; H = [1 1 0 0];
+BF2 = fir2(11, F, H);
+Yf2 = filter(BF2, 1, x);
+hf2 = impz(BF2, 1, N);
+Hf2 = freqz(BF2, 1, length(f)); 
+
+figure;
+subplot(411), plot(t, x), title('Original');
+xlabel('Time (s)');
+subplot(412), plot(t, hf2), title('FIR2 Impulse response');
+xlabel('Time (s)');
+subplot(413), plot(f, abs(Hf2)), title('FIR2 Frequency response');
+xlabel('Frequency (Hz)');
+subplot(414), plot(t, Yf2), title('FIR2 Filtered');
+xlabel('Time (s)');

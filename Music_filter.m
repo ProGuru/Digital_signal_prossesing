@@ -1,6 +1,6 @@
 % Загрузка аудиофайла
 pkg load signal;
-audio_name = 'Avicii.mp3'; % вписать вместо Avicii.mp3 название своего музыкального файла
+audio_name = 'Avicii3.mp3'; % вписать вместо Avicii.mp3 название своего музыкального файла
 [input_audio, sample_rate] = audioread(audio_name);
 
 % Выбор фильтра
